@@ -206,7 +206,7 @@ export class SubscriptionController {
     try {
       const userId = req.user?.id;
       const { newPriceId } = req.body;
-
+console.log('newPriceId', newPriceId);
       if (!userId) {
         return res.status(401).json({
           success: false,

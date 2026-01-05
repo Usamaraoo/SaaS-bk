@@ -21,6 +21,7 @@ export const PaymentService = {
                 };
             }
         }
+        console.log('coming here')
 
         // 1. Create new PaymentIntent
         const paymentIntent = await stripe.paymentIntents.create({
@@ -29,7 +30,6 @@ export const PaymentService = {
             automatic_payment_methods: { enabled: true },
             metadata: { userId },
         });
-
         // 2. Store in DB
         await PaymentRepository.create({
             userId,

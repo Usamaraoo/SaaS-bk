@@ -189,7 +189,7 @@ export class SubscriptionService {
     }
 
     // Get plan config
-    const planConfig = this.planConfig[newPriceId];
+    const planConfig = this.getPlanConfig()[newPriceId];
     if (!planConfig) {
       throw new Error('Invalid price ID');
     }
@@ -205,10 +205,10 @@ export class SubscriptionService {
     const updated = await this.repository.update(subscription.stripeSubscriptionId, {
       stripePriceId: newPriceId,
       planName: planConfig.name,
-      planType: planConfig.type,
+      planType: planConfig.type as plan_Type,
       billingInterval: stripeSubscription.items.data[0].price.recurring?.interval as 'month' | 'year',
       amount: stripeSubscription.items.data[0].price.unit_amount || 0,
-      currentPeriodEnd: new Date(stripeSubscription.current_period_end * 1000),
+      currentPeriodEnd: new Date(stripeSubscription.items.data[0].current_period_end * 1000),
     });
 
     if (!updated) {
